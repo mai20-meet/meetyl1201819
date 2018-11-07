@@ -21,11 +21,12 @@ k.description()
 k.make_sound(7)
 '''
 class person(object):
-	def __init__(self,name,age,city,gender):
+	def __init__(self,name,age,city,gender,food):
 		self.name=name
 		self.age=age
 		self.city=city
 		self.gender=gender
+		self.food=food
 	def eat(self, food):
 		print("my favorite breakfast is " + food)
 m=person("mai",15,"london","female","banana")
