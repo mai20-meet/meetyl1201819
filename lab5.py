@@ -108,8 +108,8 @@ if letter_grade is "F":
     print ("Student is failing.")
 else:
     print ("Student is passing.")
-""
 '''
+
 '''
 class Person():
    def __init__(self, name, favorite_food,Chocolate ,age,color):
@@ -135,8 +135,8 @@ a.print_info()
 
 b = Person("Jake","apple","brown Chocolate" ,15, "white")
 b.print_info()
-'''
-'''
+''
+''
 class Bear():
 	def __init__(self, name):
 		self.name = name
@@ -155,7 +155,7 @@ name = "Ron"
 color = "Yellow"
 print("This is a tale about" + "balloons" +  "balloons. The first kid is " + name + " who got a " + color + "balloon")
 '''
-'''
+
 class Cake():
 	def __init__(self, flavor):
 		self.cake_flavor = flavor
@@ -166,6 +166,7 @@ class Cake():
 cake = Cake("chocolate")
 print(cake.eat)
 # what I want to be printed: Yummy!!! Eating a chocolate cake :)
+'''
 '''
 class Cat():
 	def __init__(self,name,age):
@@ -182,6 +183,4 @@ my_cat = Cat("Salem",8)
 my_cat.birthday(8)
 # what I want: my cat to celebrate its 8th birthday (and all the 
 # birthdays that come before that)
-
-
-
+'''
