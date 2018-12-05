@@ -29,26 +29,33 @@ class Square(Turtle):
 # t1.random_color()
 
 class Hexagon(Turtle):
-	def __init__(self,size):
+	def __init__(self,size,color,speed):
 		Turtle.__init__(self)
 		self.size = size
+	
 		turtle.begin_poly()
+		turtle.fillcolor(color)
+		turtle.speed(speed)
+		turtle.penup()
 		turtle.backward(50)
 		turtle.fd(50)
-		turtle.right(130)
+		turtle.right(50)
 		turtle.fd(50)
-		turtle.rt(130)
+		turtle.rt(50)
 		turtle.fd(50)
-		turtle.rt(130)
+		turtle.rt(50)
 		turtle.fd(50)
-		turtle.rt(130)
+		turtle.rt(50)
 		turtle.fd(50)
-		turtle.rt(130)
+		turtle.rt(50)
 		turtle.fd(50)
+		turtle.rt(50)
+		turtle.fd(50)
+		turtle.pendown()
 		turtle.end_poly()
 		H = turtle.get_poly()
-		register_shape("myFavouriteHexagon", H)
+		turtle.register_shape("myFavouriteHexagon", H)
 		turtle.shape("myFavouriteHexagon")
-H=Hexagon(10)
+H=Hexagon(10, "pink",50)
 turtle.mainloop()
 # 
