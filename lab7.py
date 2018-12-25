@@ -2,9 +2,13 @@ from turtle import *
 import turtle
 import random
 import math
+<<<<<<< HEAD
 from random import randint
 
 turtle.colormode(255)
+=======
+
+>>>>>>> bfb141dd81ef472ccda3e9fec7c76c8faa28db77
 
 class ball(Turtle):
 	def __init__(self,radius,color,speed,dx,dy):
@@ -14,7 +18,10 @@ class ball(Turtle):
 		self.radius = radius
 		self.color(color)
 		self.speed(speed)
+<<<<<<< HEAD
 
+=======
+>>>>>>> bfb141dd81ef472ccda3e9fec7c76c8faa28db77
 		self.dx=dx
 		self.dy=dy
 	def border(self):
@@ -27,6 +34,7 @@ class ball(Turtle):
 			self.dy=-self.dy
 	def move(self):
 		self.goto(self.xcor()+self.dx,self.ycor()+self.dy)
+<<<<<<< HEAD
 	def random_color(self):
 
 		r = randint(0,255)
@@ -35,6 +43,8 @@ class ball(Turtle):
 		self.color((r,g,b))
 		
 
+=======
+>>>>>>> bfb141dd81ef472ccda3e9fec7c76c8faa28db77
 turtle.penup()
 turtle.pensize(5)
 turtle.goto(300,300)
@@ -56,6 +66,7 @@ def check_collision(ball1, ball2):
 
 	if	math.sqrt(math.pow((x2-x1),2) + math.pow((y2-y1),2))<=ball1.radius+ball2.radius:
 		print("hi")
+<<<<<<< HEAD
 		# ball1.goto(random.randint(-300,300),random.randint(-300,300))
 
 		#color1=random.randint(0,225),random.randint(0,225),random.randint(0,225)
@@ -67,12 +78,16 @@ def check_collision(ball1, ball2):
 		return False
 
 	
+=======
+		ball1.goto(random.randint(-300,300),random.randint(-300,300))
+>>>>>>> bfb141dd81ef472ccda3e9fec7c76c8faa28db77
 while True:
 
 	ball1.move()
 	ball2.move() 
 	ball1.border()
 	ball2.border()
+<<<<<<< HEAD
 
 	collied=check_collision(ball1,ball2)
 	if collied is True:
@@ -84,6 +99,11 @@ while True:
 # pygame.mixer.init()
 # pygame.mixer.music.load("song.mp3")
 # pygame.mixer.music.play(-1)
+=======
+	check_collision(ball1,ball2)
+
+
+>>>>>>> bfb141dd81ef472ccda3e9fec7c76c8faa28db77
 
 
 
