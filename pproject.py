@@ -2,14 +2,33 @@ import turtle
 import time
 import random
 from project import Ball 
+score=0
 turtle.tracer(0,0)
 turtle.hideturtle()
-running=True
-sleep=0.0077
-#WRITE BIG LETTERS
+turtle.goto(200,-250)
+#global varbs
+global RUNNING
+RUNNING=True
+global sleep
+SLEEP=0.0077
+global SCREEN_WIDTH
 SCREEN_WIDTH=turtle.getcanvas().winfo_width()/2
+global SCREEN_HEIGHT
 SCREEN_HEIGHT=turtle.getcanvas().winfo_height()/2
-MY_BALL=Ball(10,10,10,10,10,"pink")
+#borders
+# border=turtle.clone()
+# border.ht()
+# border.penup()
+# border.goto(-300,300)
+# border.pendown()
+# border.goto(300,300)
+# border.goto(300,-300)
+# border.goto(-300,-300)
+# border.goto(-300,300)
+
+#creating my player
+MY_BALL=Ball(10,10,30,10,10,"pink")
+#defining the ball objects
 NUMBER_OF_BALLS=5
 MINIMUM_BALL_RADIUS=10
 MAXIMUM_BALL_RADIUS=100
@@ -18,6 +37,7 @@ MAXIMUM_BALL_DX=5
 MINIMUM_BALL_DY=-5
 MAXIMUM_BALL_DY=5
 BALLS=[]
+#def-list
 for i in range(NUMBER_OF_BALLS):
 	r=random.randint(MINIMUM_BALL_RADIUS,MAXIMUM_BALL_RADIUS)
 	dx=random.randint(MINIMUM_BALL_DX,MAXIMUM_BALL_DX)
@@ -27,9 +47,11 @@ for i in range(NUMBER_OF_BALLS):
 	color=((random.random(), random.random(), random.random()))
 	MY_BALL2=Ball(x,y,r,dx,dy,color)
 	BALLS.append(MY_BALL2)
+#defining the method that moves the balls
 def move_all_balls(BALLS):
 	for ball in BALLS: 
-		ball.move(screen_width,screen_height)
+		ball.move(SCREEN_WIDTH,SCREEN_HEIGHT)
+#defining the method that check colission between 2 balls 
 def collide(ball_a,ball_b):
 	if ball_a==ball_b:
 		return False
@@ -42,6 +64,7 @@ def collide(ball_a,ball_b):
 		return True
 	else:
 		return False
+##defining the method that check colission between all balls
 def check_all_balls_collision():
 	for ball_a in BALLS:
 		for ball_b in BALLS:
@@ -80,6 +103,7 @@ def check_all_balls_collision():
 					ball_a.dy=dy
 					ball_a.color(color)
 					ball_a.shape("circle")
+#that check colission between the player and the balls
 def check_myball_collision():
 	for ball in BALLS:
 		if collide(MY_BALL,ball):
@@ -90,7 +114,7 @@ def check_myball_collision():
 			else: 
 				MY_BALL.r+= 1
 				MY_BALL.shapesize(r/10)
-				ball_b.r+= 1
+				ball.r+= 1
 				ball.shapesize(r/10)
 				ball.r=r
 				ball.shapesize(r/10)
@@ -102,7 +126,48 @@ def check_myball_collision():
 				ball.dy=dy
 				ball.color(color)
 				ball.shape("circle")
+	return True			
+#def methhod that controlls the player w the mouse
+def movearound(event):
+	x=event.x-SCREEN_WIDTH
+	y=-event.y+SCREEN_HEIGHT
+	MY_BALL.goto(x,y)
 
+turtle.getcanvas().bind("<Motion>", movearound)
+turtle.listen()
+
+while RUNNING:
+	
+	SCREEN_HEIGHT=turtle.getcanvas().winfo_height()/2
+	SCREEN_WIDTH=turtle.getcanvas().winfo_width()/2	 
+	
+	move_all_balls(BALLS)
+	check_all_balls_collision()
+	
+	RUNNING=check_myball_collision()
+	
+	turtle.update()
+	time.sleep(SLEEP)
+	if RUNNING==False:
+		you_lost =turtle.Turtle() 
+		#you_lost.hideturtle()
+		you_lost.penup()
+		image = "over.gif"
+		turtle.register_shape(image)
+		you_lost.shape(image)
+		you_lost.showturtle()
+		
+		turtle.update()
+		
+		time.sleep(3)
+		turtle.undo()
+		
+		score=score+1
+		print("You have eaten the food!")    # You should write code to check for the left, top, and bottom edges.
+		turtle.write(score,font=("Arial", 16, "normal"))
+score=score+1
+print("You have eaten the food!")    # You should write code to check for the left, top, and bottom edges.
+turtle.write(score,font=("Arial", 16, "normal"))
 
 
 
