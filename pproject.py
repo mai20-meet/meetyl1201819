@@ -18,9 +18,14 @@ global SCREEN_WIDTH
 SCREEN_WIDTH=turtle.getcanvas().winfo_width()/2
 global SCREEN_HEIGHT
 SCREEN_HEIGHT=turtle.getcanvas().winfo_height()/2
-
-#creating my player
+# mainball player face
+screen=turtle.Screen()
+screen.addshape("A.gif")
 MY_BALL=Ball(10,10,50,10,10,"pink")
+MY_BALL.shape("A.gif")
+
+
+
 #defining the ball objects
 NUMBER_OF_BALLS=5
 MINIMUM_BALL_RADIUS=10
@@ -128,6 +133,7 @@ def check_myball_collision():
 				ball.dy=dy
 				ball.color(color)
 				ball.shape("circle")
+				# score
 				global score
 				score=score+1
 		
@@ -158,7 +164,7 @@ while RUNNING:
 	time.sleep(SLEEP)
 	if RUNNING==False:
 		you_lost =turtle.Turtle() 
-		#you_lost.hideturtle()
+		#game over
 		you_lost.penup()
 		image = "over.gif"
 		turtle.register_shape(image)
