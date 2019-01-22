@@ -2,16 +2,22 @@ import turtle
 import time
 import random
 from project import Ball 
-from project import Player
+from project import PLayer
 # score
 global score
 score=0
+global score1
+score1=0
+
 
 turtle.tracer(0,0)
 turtle.hideturtle()
 turtle.pu()
 turtle.goto(200,250)
-turtle.write(score,font=("Arial", 16, "normal"))
+turtle1=turtle.clone()
+turtle1.goto(-250,250)
+turtle.write("Ahmad"+str(score),font=("Arial", 16, "normal"))
+turtle1.write("uriel"+str(score1),font=("Arial", 16, "normal"))
 #global verbs
 global RUNNING
 RUNNING=True
@@ -24,28 +30,35 @@ SCREEN_HEIGHT=turtle.getcanvas().winfo_height()/2
 #MY_BALL face
 screen=turtle.Screen()
 screen.addshape("A.gif")
-MY_BALL=Ball(10,10,50,10,10,"pink")
+MY_BALL=Ball(200,200,50,10,10,"pink")
 MY_BALL.shape("A.gif")
 #player face 
 screen=turtle.Screen()
 screen.addshape("U4.gif")
-Player=Player(15,15,15,15,15,"green")
+Player=PLayer(-250,50,50,15,15,"green")
 Player.shape("U4.gif")
-
+# bg
+turtle.bgcolor("pink")
 # game sound
-def play_sound(self,song):
-	self.song="song1.mp3"
-	os.system("afplay {}&".format("song1.mp3"))
+from pygame import mixer
+mixer.init()
+mixer.music.load('song1.mp3')
+mixer.music.play()
 
 #defining the ball objects
-NUMBER_OF_BALLS=5
-MINIMUM_BALL_RADIUS=10
-MAXIMUM_BALL_RADIUS=100
-MINIMUM_BALL_DX=-5
-MAXIMUM_BALL_DX=5
-MINIMUM_BALL_DY=-5
-MAXIMUM_BALL_DY=5
+NUMBER_OF_BALLS=7
+MINIMUM_BALL_RADIUS=5
+MAXIMUM_BALL_RADIUS=70
+MINIMUM_BALL_DX=-2
+MAXIMUM_BALL_DX=2
+MINIMUM_BALL_DY=-2
+MAXIMUM_BALL_DY=2
 BALLS=[]
+
+
+
+
+
 #def-list
 for i in range(NUMBER_OF_BALLS):
 	r=random.randint(MINIMUM_BALL_RADIUS,MAXIMUM_BALL_RADIUS)
@@ -149,48 +162,53 @@ def check_myball_collision():
 				# score
 				global score
 				score=score+1
-		
+				
 				turtle.undo()
+				turtle.goto(200,250)
 				print("You have eaten the balls!")    # You should write code to check for the left, top, and bottom edges.
-				turtle.write(score,font=("Arial", 16, "normal"))
-					 # if collide(MY_BALL,ball):
-				# background = input("pink")
-				# if background == "pink":
-				#     screen.fill("pink")
-				#     pygame.display.update()
-	return True		
-#check colission between player and the balls 
-	def check_myball_collision():
-		for ball in BALLS:
-			if collide(player,ball):
-				print("shyu")
-			R3=player.r
-			R2=ball.r
-			if R2 >= R3:
-				return False
-			else: 
-				player.r+= 1
-				player.shapesize(player.r/10)
-				r=random.randint(MINIMUM_BALL_RADIUS,MAXIMUM_BALL_RADIUS)
-				dx=random.randint(MINIMUM_BALL_DX,MAXIMUM_BALL_DX)
-				dy=random.randint(MINIMUM_BALL_DY, MAXIMUM_BALL_DY)
-				x=random.randint(-SCREEN_WIDTH + MAXIMUM_BALL_RADIUS, SCREEN_WIDTH - MAXIMUM_BALL_RADIUS)
-				y=random.randint(-SCREEN_HEIGHT + MAXIMUM_BALL_RADIUS, SCREEN_HEIGHT - MAXIMUM_BALL_RADIUS)
-				color=((random.random(), random.random(), random.random()))
+				turtle.write("Ahmad"+str(score),font=("Arial", 16, "normal"))
 			
-				ball.shapesize(r/10)
-				ball.r=r
-				ball.penup()
-				ball.goto(x,y)
-				ball.x=x
-				ball.y=y
-				ball.dx=dx
-				ball.dy=dy
-				ball.color(color)
-				ball.shape("circle")
+	return True		
+#check colission between Player and the balls 
+def check_Player_collision():
+		for ball in BALLS:
+			if collide(Player,ball):
+				print("shyu")
+				R3=Player.r
+				R2=ball.r
+				if R2 >= R3:
+					return False
+				else: 
+					Player.r+= 1
+					Player.shapesize(Player.r/10)
+					r=random.randint(MINIMUM_BALL_RADIUS,MAXIMUM_BALL_RADIUS)
+					dx=random.randint(MINIMUM_BALL_DX,MAXIMUM_BALL_DX)
+					dy=random.randint(MINIMUM_BALL_DY, MAXIMUM_BALL_DY)
+					x=random.randint(-SCREEN_WIDTH + MAXIMUM_BALL_RADIUS, SCREEN_WIDTH - MAXIMUM_BALL_RADIUS)
+					y=random.randint(-SCREEN_HEIGHT + MAXIMUM_BALL_RADIUS, SCREEN_HEIGHT - MAXIMUM_BALL_RADIUS)
+					color=((random.random(), random.random(), random.random()))
+				
+					ball.shapesize(r/10)
+					ball.r=r
+					ball.penup()
+					ball.goto(x,y)
+					ball.x=x
+					ball.y=y
+					ball.dx=dx
+					ball.dy=dy
+					ball.color(color)
+					ball.shape("circle")
+
+					global score1
+					score1=score1+1
+		
+					turtle1.undo()
+					
+					print("You have eaten the balls!")    # You should write code to check for the left, top, and bottom edges.
+					turtle1.write("Uriel"+str(score1),font=("Arial", 16, "normal"))
 			
 				
-	return True		
+		return True		
 
 #def methhod that controlls MY_BALL w the mouse
 def movearound(event):
@@ -203,11 +221,11 @@ turtle.listen()
 
 
 # player movement(keys)
-def movearound(event):
+def movearound1(event):
 	x=event.x-SCREEN_WIDTH
 	y=-event.y+SCREEN_HEIGHT
 	player.goto(x,y)
-	turtle.listen
+	turtle.listen()
 
 UP_ARROW = "Up" 
 LEFT_ARROW = "Left" 
@@ -221,40 +239,34 @@ LEFT=1
 DOWN=2
 RIGHT=3
 
-UP_EDGE = 400
-DOWN_EDGE = -400
-RIGHT_EDGE = 300
-LEFT_EDGE = -300
 
-
-direction = UP
-
+step=30
 def up():
-    global direction 
-    direction=UP
-
+    Player.dy=step
+    Player.dx=0
+    Player.move(SCREEN_WIDTH,SCREEN_HEIGHT)
     print("You pressed the up key!")
 
 
+
 def down():
-    global direction 
-    direction=DOWN 
+    Player.dy=-step
+    Player.dx=0
+    Player.move(SCREEN_WIDTH,SCREEN_HEIGHT)
     print("You pressed the down key!")
 
 def left():
-    global direction 
-    direction=LEFT 
+    Player.dy=0
+    Player.dx=-step
+    Player.move(SCREEN_WIDTH,SCREEN_HEIGHT)
     print("You pressed the left key!")
 
 def right():
-    global direction 
-    direction=RIGHT 
+    Player.dx=step
+    Player.dy=0
+    Player.move(SCREEN_WIDTH,SCREEN_HEIGHT)
     print("You pressed the right key!")
 
-def movearound(event):
-	x=event.x-SCREEN_WIDTH
-	y=-event.y+SCREEN_HEIGHT
-	player.goto(x,y)
 
 turtle.onkeypress(up, UP_ARROW) 
 turtle.onkeypress(down, DOWN_ARROW)
@@ -262,7 +274,7 @@ turtle.onkeypress(left, LEFT_ARROW)
 turtle.onkeypress(right, RIGHT_ARROW)
 
 turtle.listen()
-# while function
+# while function MY_BALL
 while RUNNING:
 	
 	SCREEN_HEIGHT=turtle.getcanvas().winfo_height()/2
@@ -270,8 +282,9 @@ while RUNNING:
 	
 	move_all_balls(BALLS)
 	check_all_balls_collision()
+
 	
-	RUNNING=check_myball_collision()
+	RUNNING=check_myball_collision() and check_Player_collision()
 	
 	turtle.update()
 	time.sleep(SLEEP)
@@ -285,8 +298,9 @@ while RUNNING:
 		you_lost.showturtle()
 		
 		turtle.update()
-		
 		time.sleep(3)
+ 
+
 
 
 

@@ -40,7 +40,7 @@ class Ball(turtle.Turtle):
 
 
 #creat a class
-class Player(turtle.Turtle):
+class PLayer(turtle.Turtle):
 	def __init__(self,x,y,r,dx,dy,color):
 		
 		turtle.Turtle.__init__(self)
