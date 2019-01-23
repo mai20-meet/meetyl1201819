@@ -16,8 +16,11 @@ turtle.pu()
 turtle.goto(200,250)
 turtle1=turtle.clone()
 turtle1.goto(-250,250)
+turtle2=turtle.clone()
+turtle2.goto(-300,400)
 turtle.write("Ahmad"+str(score),font=("Arial", 16, "normal"))
 turtle1.write("uriel"+str(score1),font=("Arial", 16, "normal"))
+turtle2.write("AHMAD N URIEL ADVENTURE",font=("Arial", 32, "normal"))
 #global verbs
 global RUNNING
 RUNNING=True
@@ -29,16 +32,21 @@ global SCREEN_HEIGHT
 SCREEN_HEIGHT=turtle.getcanvas().winfo_height()/2
 #MY_BALL face
 screen=turtle.Screen()
+screen.setup(1000, 1000)
+
+
+
 screen.addshape("A.gif")
 MY_BALL=Ball(200,200,50,10,10,"pink")
 MY_BALL.shape("A.gif")
+ball_alive=True
 #player face 
 screen=turtle.Screen()
 screen.addshape("U4.gif")
 Player=PLayer(-250,50,50,15,15,"green")
 Player.shape("U4.gif")
-# bg
-turtle.bgcolor("pink")
+player_alive = True
+
 # game sound
 from pygame import mixer
 mixer.init()
@@ -167,7 +175,11 @@ def check_myball_collision():
 				turtle.goto(200,250)
 				print("You have eaten the balls!")    # You should write code to check for the left, top, and bottom edges.
 				turtle.write("Ahmad"+str(score),font=("Arial", 16, "normal"))
-			
+				# changing bg
+				bg=["yellow","pink","light blue","purple","light green"]
+				i= random.randint(0,4)
+				# screen.addshape(bg[i])
+				screen.bgcolor(bg[i])    
 	return True		
 #check colission between Player and the balls 
 def check_Player_collision():
@@ -284,7 +296,30 @@ while RUNNING:
 	check_all_balls_collision()
 
 	
-	RUNNING=check_myball_collision() and check_Player_collision()
+	#RUNNING=check_myball_collision() and check_Player_collision()
+	if ball_alive:
+		ball_alive = check_myball_collision()
+	if player_alive:
+		player_alive = check_Player_collision()
+
+
+	if ball_alive==False:
+		MY_BALL.clear()
+		MY_BALL.ht()
+
+
+	if player_alive==False:
+		Player.clear()
+		Player.ht()
+	# if(alive1==False and alive2==True):
+
+	# 	#my ball is dead
+	# if(alive1==True and alive2==False):
+	# 	pass
+		#myball is alive, player is dead
+	if(ball_alive==False and player_alive==False):
+		RUNNING = False
+		#both are dead
 	
 	turtle.update()
 	time.sleep(SLEEP)
@@ -296,7 +331,7 @@ while RUNNING:
 		turtle.register_shape(image)
 		you_lost.shape(image)
 		you_lost.showturtle()
-		
+		print(SCREEN_WIDTH,SCREEN_HEIGHT)
 		turtle.update()
 		time.sleep(3)
  
