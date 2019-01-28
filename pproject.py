@@ -8,18 +8,27 @@ global score
 score=0
 global score1
 score1=0
-
+# global life 
+# life=3
+# global life1
+# life1=3
 
 turtle.tracer(0,0)
 turtle.hideturtle()
 turtle.pu()
+# ahmad score pos
 turtle.goto(200,250)
 turtle1=turtle.clone()
+# uriel score pos
 turtle1.goto(-250,250)
 turtle2=turtle.clone()
+# title pos
 turtle2.goto(-300,400)
+# ahmad score
 turtle.write("Ahmad"+str(score),font=("Arial", 16, "normal"))
+# uriel score
 turtle1.write("uriel"+str(score1),font=("Arial", 16, "normal"))
+# title 
 turtle2.write("AHMAD N URIEL ADVENTURE",font=("Arial", 32, "normal"))
 #global verbs
 global RUNNING
@@ -78,6 +87,22 @@ for i in range(NUMBER_OF_BALLS):
 	# random balls
 	MY_BALL2=Ball(x,y,r,dx,dy,color)
 	BALLS.append(MY_BALL2)
+# food list
+food=[]
+for i in range(15):
+	r= 10
+	x=random.randint(-SCREEN_WIDTH + MAXIMUM_BALL_RADIUS, SCREEN_WIDTH - MAXIMUM_BALL_RADIUS)
+	y=random.randint(-SCREEN_HEIGHT + MAXIMUM_BALL_RADIUS, SCREEN_HEIGHT - MAXIMUM_BALL_RADIUS)
+	screen=turtle.Screen()
+	screen.addshape("food.gif")
+	FOOD=Ball(x,y,r,0,0,"pink")
+	FOOD.shape("food.gif")
+	food.append(FOOD)
+
+
+
+
+
 #defining the method that moves the balls
 def move_all_balls(BALLS):
 	for ball in BALLS: 
@@ -146,7 +171,29 @@ def check_myball_collision():
 			R1=MY_BALL.r
 			R2=ball.r
 			if R2 >= R1:
-				return False
+				# global life
+				# life=life-1
+				# x=random.randint(-SCREEN_WIDTH + MAXIMUM_BALL_RADIUS, SCREEN_WIDTH - MAXIMUM_BALL_RADIUS)
+				# y=random.randint(-SCREEN_HEIGHT + MAXIMUM_BALL_RADIUS, SCREEN_HEIGHT - MAXIMUM_BALL_RADIUS)
+				# ball.goto(x,y)
+				# turtle.undo()
+				# turtle.goto(0,0)
+				# print("you have lost a life")
+				# turtle.write("you have lost a life"+str(life),font=("Arial", 32, "normal"))
+				# if life==0:
+				# 	you_lost =turtle.Turtle() 
+				# 	#game over
+				# 	you_lost.penup()
+				# 	image = "over.gif"
+				# 	turtle.register_shape(image)
+				# 	you_lost.shape(image)
+				# 	you_lost.showturtle()
+				# 	print(SCREEN_WIDTH,SCREEN_HEIGHT)
+				# 	turtle.update()
+				# 	time.sleep(3)
+					return False
+	 
+
 			else: 
 				MY_BALL.r+= 1
 				MY_BALL.shapesize(MY_BALL.r/10)
@@ -173,13 +220,21 @@ def check_myball_collision():
 				
 				turtle.undo()
 				turtle.goto(200,250)
-				print("You have eaten the balls!")    # You should write code to check for the left, top, and bottom edges.
+				print("You have eaten the balls!")    
 				turtle.write("Ahmad"+str(score),font=("Arial", 16, "normal"))
 				# changing bg
 				bg=["yellow","pink","light blue","purple","light green"]
 				i= random.randint(0,4)
-				# screen.addshape(bg[i])
-				screen.bgcolor(bg[i])    
+				screen.bgcolor(bg[i]) 
+	
+	for FOOD in food:
+		if collide(MY_BALL,FOOD):
+				MY_BALL.r+= 1
+				x=random.randint(-SCREEN_WIDTH + MAXIMUM_BALL_RADIUS, SCREEN_WIDTH - MAXIMUM_BALL_RADIUS)
+				y=random.randint(-SCREEN_HEIGHT + MAXIMUM_BALL_RADIUS, SCREEN_HEIGHT - MAXIMUM_BALL_RADIUS)
+				FOOD.goto(x,y)	
+
+
 	return True		
 #check colission between Player and the balls 
 def check_Player_collision():
@@ -189,7 +244,27 @@ def check_Player_collision():
 				R3=Player.r
 				R2=ball.r
 				if R2 >= R3:
-					return False
+					# global life
+					# life1=life1-1 
+					# x=random.randint(-SCREEN_WIDTH + MAXIMUM_BALL_RADIUS, SCREEN_WIDTH - MAXIMUM_BALL_RADIUS)
+					# y=random.randint(-SCREEN_HEIGHT + MAXIMUM_BALL_RADIUS, SCREEN_HEIGHT - MAXIMUM_BALL_RADIUS)
+					# ball.goto(x,y)
+					# turtle.undo()
+					# turtle.goto(0,0)
+					# print("you have lost a life")
+					# turtle.write("you have lost a life"+str(life),font=("Arial", 32, "normal"))
+					# if life1 == 0:
+					# 	you_lost =turtle.Turtle() 
+					# 	#game over
+					# 	you_lost.penup()
+					# 	image = "over.gif"
+					# 	turtle.register_shape(image)
+					# 	you_lost.shape(image)
+					# 	you_lost.showturtle()
+					# 	print(SCREEN_WIDTH,SCREEN_HEIGHT)
+					# 	turtle.update()
+					# 	time.sleep(3)
+						return False
 				else: 
 					Player.r+= 1
 					Player.shapesize(Player.r/10)
@@ -218,8 +293,17 @@ def check_Player_collision():
 					
 					print("You have eaten the balls!")    # You should write code to check for the left, top, and bottom edges.
 					turtle1.write("Uriel"+str(score1),font=("Arial", 16, "normal"))
+					bg=["yellow","pink","light blue","purple","light green"]
+					i= random.randint(0,4)
+					# screen.addshape(bg[i])
+					screen.bgcolor(bg[i])   
 			
-				
+		for FOOD in food:
+			if collide(Player,FOOD):
+				Player.r+= 1
+				x=random.randint(-SCREEN_WIDTH + MAXIMUM_BALL_RADIUS, SCREEN_WIDTH - MAXIMUM_BALL_RADIUS)
+				y=random.randint(-SCREEN_HEIGHT + MAXIMUM_BALL_RADIUS, SCREEN_HEIGHT - MAXIMUM_BALL_RADIUS)
+				FOOD.goto(x,y)		
 		return True		
 
 #def methhod that controlls MY_BALL w the mouse
@@ -291,12 +375,45 @@ while RUNNING:
 	
 	SCREEN_HEIGHT=turtle.getcanvas().winfo_height()/2
 	SCREEN_WIDTH=turtle.getcanvas().winfo_width()/2	 
-	
+	turtle.setup(2000,2000)
 	move_all_balls(BALLS)
 	check_all_balls_collision()
-
-	
-	#RUNNING=check_myball_collision() and check_Player_collision()
+# you won function
+	if score > 15 or score1 > 15:
+		if score > 15:
+			turtle.goto(-300,100)
+			turtle.write("AHMAD WON",font=("Arial", 64, "normal"))
+			you_lost =turtle.Turtle() 
+			#game over
+			you_lost.penup()
+			image = "over.gif"
+			turtle.register_shape(image)
+			you_lost.shape(image)
+			you_lost.showturtle()
+			print(SCREEN_WIDTH,SCREEN_HEIGHT)
+			time.sleep(SLEEP)
+			turtle.update()
+			time.sleep(3)
+			RUNNING = False
+			quit()
+		else: 
+			turtle.goto(-300,100)
+			turtle.write("URIEL WON",font=("Arial", 64, "normal"))
+			you_lost =turtle.Turtle() 
+		#game over
+			you_lost.penup()
+			image = "over.gif"
+			turtle.register_shape(image)
+			you_lost.shape(image)
+			you_lost.showturtle()
+			print(SCREEN_WIDTH,SCREEN_HEIGHT)
+			time.sleep(SLEEP)
+			turtle.update()
+			time.sleep(3)
+			RUNNING = False
+			quit()
+# hiding the losing player/my ball
+		RUNNING=check_myball_collision() and check_Player_collision()
 	if ball_alive:
 		ball_alive = check_myball_collision()
 	if player_alive:
@@ -311,19 +428,15 @@ while RUNNING:
 	if player_alive==False:
 		Player.clear()
 		Player.ht()
-	# if(alive1==False and alive2==True):
 
-	# 	#my ball is dead
-	# if(alive1==True and alive2==False):
-	# 	pass
-		#myball is alive, player is dead
 	if(ball_alive==False and player_alive==False):
 		RUNNING = False
-		#both are dead
-	
+		
 	turtle.update()
 	time.sleep(SLEEP)
+
 	if RUNNING==False:
+		# turtle.write("YOU LOST A LIFE",font=("Arial", 32, "normal"))
 		you_lost =turtle.Turtle() 
 		#game over
 		you_lost.penup()
@@ -335,6 +448,7 @@ while RUNNING:
 		turtle.update()
 		time.sleep(3)
  
+
 
 
 
