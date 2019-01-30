@@ -3,15 +3,18 @@ import time
 import random
 from project import Ball 
 from project import PLayer
-# score
+# ahmad score  
 global score
 score=0
+# uriel life
 global score1
 score1=0
-# global life 
-# life=3
-# global life1
-# life1=3
+# ahmad life
+global life 
+life=3
+# uriel life
+global life1
+life1=3
 
 turtle.tracer(0,0)
 turtle.hideturtle()
@@ -77,6 +80,15 @@ BALLS=[]
 
 
 #def-list
+# sadek gif
+screen=turtle.Screen()
+screen.addshape("1.gif")
+screen.addshape("2.gif")
+screen.addshape("3.gif")
+screen.addshape("4.gif")
+screen.addshape("5.gif")
+screen.addshape("6.gif")
+screen.addshape("7.gif")
 for i in range(NUMBER_OF_BALLS):
 	r=random.randint(MINIMUM_BALL_RADIUS,MAXIMUM_BALL_RADIUS)
 	dx=random.randint(MINIMUM_BALL_DX,MAXIMUM_BALL_DX)
@@ -86,6 +98,9 @@ for i in range(NUMBER_OF_BALLS):
 	color=((random.random(), random.random(), random.random()))
 	# random balls
 	MY_BALL2=Ball(x,y,r,dx,dy,color)
+	
+	MY_BALL2.shape("1.gif")
+	MY_BALL2.shapesize(r/10)
 	BALLS.append(MY_BALL2)
 # food list
 food=[]
@@ -94,9 +109,9 @@ for i in range(15):
 	x=random.randint(-SCREEN_WIDTH + MAXIMUM_BALL_RADIUS, SCREEN_WIDTH - MAXIMUM_BALL_RADIUS)
 	y=random.randint(-SCREEN_HEIGHT + MAXIMUM_BALL_RADIUS, SCREEN_HEIGHT - MAXIMUM_BALL_RADIUS)
 	screen=turtle.Screen()
-	screen.addshape("food.gif")
+	screen.addshape("avital.gif")
 	FOOD=Ball(x,y,r,0,0,"pink")
-	FOOD.shape("food.gif")
+	FOOD.shape("avital.gif")
 	food.append(FOOD)
 
 
@@ -122,6 +137,27 @@ def collide(ball_a,ball_b):
 		return True
 	else:
 		return False
+
+def check_sizes():
+	for ball_a in BALLS:
+		if ball_a.r < 10:
+			ball_a.shape("1.gif")
+		if ball_a.r < 20 and ball_a.r >= 10:
+			ball_a.shape("2.gif")
+		if ball_a.r < 30 and ball_a.r >= 20:
+			ball_a.shape("3.gif")
+		if ball_a.r < 40 and ball_a.r >= 30:
+			ball_a.shape("4.gif")
+		if ball_a.r < 50 and ball_a.r >= 40:
+			ball_a.shape("5.gif")
+		if ball_a.r < 60 and ball_a.r >= 50:
+			ball_a.shape("6.gif")
+		if ball_a.r < 70 and ball_a.r >= 60:
+			ball_a.shape("7.gif")
+
+
+
+
 #defining the method that checks colission between all balls
 def check_all_balls_collision():
 	for ball_a in BALLS:
@@ -140,7 +176,7 @@ def check_all_balls_collision():
 						ball_a.r+= 1
 					ball_a.shapesize(ball_a.r/10)
 					ball_b.r=r
-					ball_b.shapesize(r/10)
+					
 					ball_b.penup()
 					ball_b.goto(x,y)
 					ball_b.x=x
@@ -149,12 +185,13 @@ def check_all_balls_collision():
 					ball_b.dy=dy
 					ball_b.color(color)
 					ball_b.shape("circle")
+					ball_b.shapesize(r/10)
 				else:
 					if ball_b.r < MAXIMUM_BALL_RADIUS:
 						ball_b.r+= 1
 					ball_b.shapesize(ball_b.r/10)
 					ball_a.r=r
-					ball_a.shapesize(r/10)
+					
 					ball_a.penup()
 					ball_a.goto(x,y)
 					ball_a.x=x
@@ -163,6 +200,7 @@ def check_all_balls_collision():
 					ball_a.dy=dy
 					ball_a.color(color)
 					ball_a.shape("circle")
+					ball_a.shapesize(r/10)
 #check colission between MY_BALL and the balls
 def check_myball_collision():
 	for ball in BALLS:
@@ -171,26 +209,20 @@ def check_myball_collision():
 			R1=MY_BALL.r
 			R2=ball.r
 			if R2 >= R1:
-				# global life
-				# life=life-1
-				# x=random.randint(-SCREEN_WIDTH + MAXIMUM_BALL_RADIUS, SCREEN_WIDTH - MAXIMUM_BALL_RADIUS)
-				# y=random.randint(-SCREEN_HEIGHT + MAXIMUM_BALL_RADIUS, SCREEN_HEIGHT - MAXIMUM_BALL_RADIUS)
-				# ball.goto(x,y)
-				# turtle.undo()
-				# turtle.goto(0,0)
-				# print("you have lost a life")
-				# turtle.write("you have lost a life"+str(life),font=("Arial", 32, "normal"))
-				# if life==0:
-				# 	you_lost =turtle.Turtle() 
-				# 	#game over
-				# 	you_lost.penup()
-				# 	image = "over.gif"
-				# 	turtle.register_shape(image)
-				# 	you_lost.shape(image)
-				# 	you_lost.showturtle()
-				# 	print(SCREEN_WIDTH,SCREEN_HEIGHT)
-				# 	turtle.update()
-				# 	time.sleep(3)
+				# ahmad life
+				global life
+				life=life-1
+				x=random.randint(-SCREEN_WIDTH + MAXIMUM_BALL_RADIUS, SCREEN_WIDTH - MAXIMUM_BALL_RADIUS)
+				y=random.randint(-SCREEN_HEIGHT + MAXIMUM_BALL_RADIUS, SCREEN_HEIGHT - MAXIMUM_BALL_RADIUS)
+				ball.goto(x,y)
+				turtle.undo()
+				turtle.goto(-500,300)
+				turtle.write("AHMAD lost a life"+str(life),font=("Arial", 32, "normal"))
+				if life==0:
+					turtle.goto(-500,-400)
+					turtle.write("AHMAD lost",font=("Arial", 32, "normal"))
+					turtle.update()
+					time.sleep(3)
 					return False
 	 
 
@@ -244,26 +276,20 @@ def check_Player_collision():
 				R3=Player.r
 				R2=ball.r
 				if R2 >= R3:
-					# global life
-					# life1=life1-1 
-					# x=random.randint(-SCREEN_WIDTH + MAXIMUM_BALL_RADIUS, SCREEN_WIDTH - MAXIMUM_BALL_RADIUS)
-					# y=random.randint(-SCREEN_HEIGHT + MAXIMUM_BALL_RADIUS, SCREEN_HEIGHT - MAXIMUM_BALL_RADIUS)
-					# ball.goto(x,y)
-					# turtle.undo()
-					# turtle.goto(0,0)
-					# print("you have lost a life")
-					# turtle.write("you have lost a life"+str(life),font=("Arial", 32, "normal"))
-					# if life1 == 0:
-					# 	you_lost =turtle.Turtle() 
-					# 	#game over
-					# 	you_lost.penup()
-					# 	image = "over.gif"
-					# 	turtle.register_shape(image)
-					# 	you_lost.shape(image)
-					# 	you_lost.showturtle()
-					# 	print(SCREEN_WIDTH,SCREEN_HEIGHT)
-					# 	turtle.update()
-					# 	time.sleep(3)
+					# uriel life
+					global life1
+					life1=life1-1 
+					x=random.randint(-SCREEN_WIDTH + MAXIMUM_BALL_RADIUS, SCREEN_WIDTH - MAXIMUM_BALL_RADIUS)
+					y=random.randint(-SCREEN_HEIGHT + MAXIMUM_BALL_RADIUS, SCREEN_HEIGHT - MAXIMUM_BALL_RADIUS)
+					ball.goto(x,y)
+					turtle.undo()
+					turtle.goto(400,300)
+					turtle.write("URIEL lost a life"+str(life1),font=("Arial", 32, "normal"))
+					if life1 == 0:
+						turtle.goto(400,-400)
+						turtle.write("URIEL lost",font=("Arial", 32, "normal"))
+						turtle.update()
+						time.sleep(3)
 						return False
 				else: 
 					Player.r+= 1
@@ -378,11 +404,12 @@ while RUNNING:
 	turtle.setup(2000,2000)
 	move_all_balls(BALLS)
 	check_all_balls_collision()
+	check_sizes()
 # you won function
 	if score > 15 or score1 > 15:
 		if score > 15:
 			turtle.goto(-300,100)
-			turtle.write("AHMAD WON",font=("Arial", 64, "normal"))
+			turtle.write("AHMAD WON " + str(score),font=("Arial", 64, "normal"))
 			you_lost =turtle.Turtle() 
 			#game over
 			you_lost.penup()
@@ -398,7 +425,7 @@ while RUNNING:
 			quit()
 		else: 
 			turtle.goto(-300,100)
-			turtle.write("URIEL WON",font=("Arial", 64, "normal"))
+			turtle.write("URIEL WON " + str(score),font=("Arial", 64, "normal"))
 			you_lost =turtle.Turtle() 
 		#game over
 			you_lost.penup()
@@ -436,7 +463,7 @@ while RUNNING:
 	time.sleep(SLEEP)
 
 	if RUNNING==False:
-		# turtle.write("YOU LOST A LIFE",font=("Arial", 32, "normal"))
+		
 		you_lost =turtle.Turtle() 
 		#game over
 		you_lost.penup()
